@@ -5,7 +5,7 @@ from bokeh.models import ColumnDataSource, GMapOptions
 from bokeh.plotting import gmap
 from visualization import read_coords
 
-API_key = "AIzaSyAIF4BahfDRbG-T9lOziP7jtpyhiBPe6n8" # Google API key for GoogleMaps features
+API_key = "" # Google API key for GoogleMaps features
 
 output_file("Paris_streets.html")
 map_options = GMapOptions(lat=48.855, lng=2.345, map_type="roadmap", zoom=13)
