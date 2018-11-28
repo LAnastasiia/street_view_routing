@@ -59,7 +59,3 @@ if __name__ == "__main__":
     # print(num_info)
     get_street_coords(fname, num_info["junctions_num"], num_info["streets_num"])
 
-
-# def get_street_lon_lat(filename, database):
-#     pass
-# print(df.iloc[[2]])

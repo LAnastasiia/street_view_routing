@@ -7,3 +7,5 @@ class Car:
         self.path.append(new_position)
         self.current_position = new_position
 
+        # mark street as visited in DataBase
+
