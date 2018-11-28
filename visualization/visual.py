@@ -11,7 +11,7 @@ output_file("Paris_streets.html")
 map_options = GMapOptions(lat=48.855, lng=2.345, map_type="roadmap", zoom=13)
 p = gmap(API_key, map_options, title="Paris")
 
-input_file = "input_data.txt"
+input_file = "../input_data.txt"
 row_nums = read_coords.get_info(input_file)
 coords = read_coords.get_lon_lat(input_file)
 street_lat, street_lon = read_coords.get_street_coords(input_file,

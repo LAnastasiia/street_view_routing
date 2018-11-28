@@ -1,2 +1,40 @@
-8 cars in the freet 
-Car #0 -- stays on 4679Car #1 -- stays on 893
+2 cars in the freet 
+START at 4516
+Car #1 -- moves from junction 4516 to junction 1032
+Car #2 -- moves from junction 4516 to junction 7281
+Car #1 -- moves from junction 1032 to junction 3655
+Car #2 -- moves from junction 7281 to junction 2751
+Car #1 -- moves from junction 3655 to junction 7680
+Car #2 -- moves from junction 2751 to junction 2239
+Car #1 -- moves from junction 7680 to junction 397
+Car #2 -- moves from junction 2239 to junction 7075
+Car #1 -- moves from junction 397 to junction 4679
+Car #2 -- moves from junction 7075 to junction 8109
+Car #1 -- moves from junction 4679 to junction 10360
+Car #2 -- moves from junction 8109 to junction 60
+Car #1 -- moves from junction 10360 to junction 10088
+Car #2 -- moves from junction 60 to junction 8469
+Car #1 -- moves from junction 10088 to junction 7485
+Car #2 -- moves from junction 8469 to junction 7148
+Car #1 -- moves from junction 7485 to junction 6585
+Car #2 -- moves from junction 7148 to junction 5518
+Car #1 -- moves from junction 6585 to junction 5788
+Car #2 -- moves from junction 5518 to junction 8363
+Car #1 -- moves from junction 5788 to junction 2952
+Car #2 -- stays on 8363
+Car #1 -- moves from junction 2952 to junction 8617
+Car #1 -- moves from junction 8617 to junction 989
+Car #1 -- moves from junction 989 to junction 2895
+Car #1 -- moves from junction 2895 to junction 1545
+Car #1 -- moves from junction 1545 to junction 11072
+Car #1 -- moves from junction 11072 to junction 4675
+Car #1 -- moves from junction 4675 to junction 6072
+Car #1 -- moves from junction 6072 to junction 8042
+Car #1 -- moves from junction 8042 to junction 8213
+Car #1 -- moves from junction 8213 to junction 5025
+Car #1 -- moves from junction 5025 to junction 9646
+Car #1 -- moves from junction 9646 to junction 10379
+Car #1 -- moves from junction 10379 to junction 10573
+Car #1 -- moves from junction 10573 to junction 3919
+Car #1 -- moves from junction 3919 to junction 4351
+Car #1 -- stays on 4351
