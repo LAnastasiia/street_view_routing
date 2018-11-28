@@ -11,8 +11,8 @@ general_info = get_info(input_file)
 NUM_CARS = general_info["cars_num"]
 TIME_LEFT = [general_info["timespan"]] * NUM_CARS
 LEN_VIEWED = 0
-CURR_POSITION = general_info["start_point"]
-FLEET = [Car(CURR_POSITION, i) for i in range(NUM_CARS)]
+START = general_info["start_point"]
+FLEET = [Car(START, i) for i in range(NUM_CARS)]
 
 
 def write_results(total_time):
@@ -20,17 +20,19 @@ def write_results(total_time):
     Write car movements.
     """
     with open("results.txt", 'w') as results_file:
-        results_file.write("{} cars in the freet".format(NUM_CARS))
+        results_file.write("{} cars in the freet \n".format(NUM_CARS))
 
         j, stopped = 0, 0
         while stopped != NUM_CARS:
             for car in FLEET:
-                if len(car.path) < j-1:
+                if len(car.path) < j:
                     movement = "moves from junction {} to junction {}".format(car.path[j],
                                                                               car.path[j+1])
                 else:
                     movement = "stays on {}".format(car.path[-1])
                     stopped += 1
+                    if stopped == NUM_CARS:
+                        break
                 results_file.write("Car #{} -- {}".format(str(car.id), movement))
                 j += 1
 
@@ -39,13 +41,14 @@ def write_results(total_time):
 choose_next = [choose_next_len_time, choose_next_cost_time]
 
 # Move cars consequenly.
-for c in range(2):
+for c in range(NUM_CARS):
+    CURR_POSITION = START
     car = FLEET[c]
     TL = TIME_LEFT[c]
     while TL > 0:
         street_list = read_from_database(CURR_POSITION)
-        next_street = choose_next[c%2](street_list, TL)
-        if (next_street):
+        next_street = choose_next[c%2](street_list, TL, car)
+        if (next_street) and next_street.junctions[1] not in car.path:
             next_point = next_street.junctions[1]
             print("Move car{} from {} to {}".format(c, CURR_POSITION, next_point))
             car.move(next_point)
@@ -54,8 +57,9 @@ for c in range(2):
             if not next_street.is_visited:
                 LEN_VIEWED += next_street.len
         else:
+            print("Stop", TL)
             # if there is no way to move -- car stays on the it's last position and time runs out
             TL = 0
 
 print(LEN_VIEWED)
-write_results(TIME_LEFT[0])
+# write_results(TIME_LEFT[0])
