@@ -1,0 +1,27 @@
+2 cars in the freet 
+START at 6800
+Car #1 -- moves from junction 6800 to junction 3467
+Car #2 -- moves from junction 6800 to junction 8561
+Car #1 -- moves from junction 3467 to junction 5609
+Car #2 -- moves from junction 8561 to junction 5113
+Car #1 -- moves from junction 5609 to junction 10064
+Car #2 -- moves from junction 5113 to junction 7403
+Car #1 -- moves from junction 10064 to junction 3653
+Car #2 -- stays on 7403
+Car #1 -- moves from junction 3653 to junction 1590
+Car #1 -- moves from junction 1590 to junction 2045
+Car #1 -- moves from junction 2045 to junction 3328
+Car #1 -- moves from junction 3328 to junction 910
+Car #1 -- moves from junction 910 to junction 5781
+Car #1 -- moves from junction 5781 to junction 6969
+Car #1 -- moves from junction 6969 to junction 10770
+Car #1 -- moves from junction 10770 to junction 1416
+Car #1 -- moves from junction 1416 to junction 6265
+Car #1 -- moves from junction 6265 to junction 10967
+Car #1 -- moves from junction 10967 to junction 1493
+Car #1 -- moves from junction 1493 to junction 1780
+Car #1 -- moves from junction 1780 to junction 1034
+Car #1 -- moves from junction 1034 to junction 5014
+Car #1 -- moves from junction 5014 to junction 2284
+Car #1 -- moves from junction 2284 to junction 8380
+Car #1 -- stays on 8380

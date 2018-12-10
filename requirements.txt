@@ -1,1 +1,2 @@
+holoviews
 bokeh
