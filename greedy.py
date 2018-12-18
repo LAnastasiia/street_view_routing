@@ -1,14 +1,15 @@
 from classes.street import Street
 from classes.car import Car
-from classes.street import read_from_database
+from classes.street import read_from_database, reset_visited
 from classes.street import read_junc_coords
 from visualization.read_coords import get_info
-from choose_next_street import choose_next_len_time, choose_next_cost_time
-
+from choose_next_street import choose_next_len_time, choose_next_cost_time, euler_path, choose_back
 
 input_file = "input_data.txt"
 general_info = get_info(input_file)
 NUM_CARS = general_info["cars_num"]
+NUM_CARS = 2
+
 
 TIME_LEFT = [general_info["timespan"]] * NUM_CARS
 LEN_VIEWED = 0
@@ -37,41 +38,65 @@ def write_results(total_time):
             j += 1
 
 
-choose_next = [choose_next_len_time, choose_next_cost_time]          # arr of functions for cars with different indexes
 
-def greedy_routing(CURR_POSITION):
-    """
-    Move cars consequenly choosing next step according chosen to greedy algoithm.
-    """
+# arr of functions for cars with different indexes
+choose_next = [choose_next_len_time, choose_next_cost_time, euler_path]
+
+
+def greedy_routing(curr_pos, ind):
+    NUM_CARS = 1
+    VISITED = []
+    routs_list = []
+    reset_visited()
     LEN_VIEWED = 0
-    NUM_CARS = 2   # test only two greedy functions available
-
-    vis_junkt_list = []
-    res_len = []
 
     for c in range(NUM_CARS):
         car = FLEET[c]
         TL = TIME_LEFT[c]
+        CURR_POSITION = curr_pos
+
         while TL > 0:
             street_list = read_from_database(CURR_POSITION)
-            next_street = choose_next[c%2](street_list, TL, car)
-            if (next_street) and next_street.junctions[1] not in car.path:
+            # next_street = choose_next[c%2](street_list, TL, car)
+            next_street = choose_next[ind](street_list, TL, car)
+
+            if next_street and next_street not in VISITED:
                 next_point = next_street.junctions[1]
-                # print("-- Move car{} from {} to {}".format(c, CURR_POSITION, next_point))
-                car.move(next_point)
+                print("-- Move car{} from {} to {}".format(c, CURR_POSITION, next_point))
                 CURR_POSITION = next_point
                 TL -= next_street.time
-                if (c%2 == 0 and next_street.is_visited) or (c%2 == 1 and not next_street.is_visited):
-                    LEN_VIEWED += next_street.len
-                next_street.set_is_visited(1)
+                LEN_VIEWED += next_street.len
+                next_street.set_is_visited()
+
             else:
-                # print("-- Stop |", TL)                    # if there is no way to move -- car stops until time runs out
-                TL = 0
-        vis_junkt_list.append(car.path)
-        res_len.append(LEN_VIEWED)
-        print(LEN_VIEWED)
-    print('\n')
-    return res_len
+                print("(backtracking) ", end='')
+                back_streets = read_from_database(CURR_POSITION)
+                new_streets = list(filter(lambda x: x.junctions not in VISITED, back_streets))
+                if new_streets:
+                    i = 0
+                    while i < len(new_streets):
+                        i += 1
+                        next_street = new_streets[-1]
+                        if next_street.time <= TL:
+                            print("-- Move car{} from {} to {}".format(c, CURR_POSITION, next_street.junctions[1]))
+                            CURR_POSITION = next_street.junctions[1]
+                            car.move(CURR_POSITION)
+                            if (not next_street.is_visited):
+                                LEN_VIEWED += next_street.len
+                            VISITED.append(next_street.junctions)
+                            break
+                        else:
+                            new_streets.remove(next_street)
+                else:
+                    print("-- Stop |", TL)                # if there is no way to move -- car stops until time runs out
+                    TL = 0
+
+        reset_visited()
+        routs_list.append(car.path)
+    print(LEN_VIEWED)
+    return car.path
+
+
 
     ###################  -- output
     #
@@ -85,7 +110,7 @@ def greedy_routing(CURR_POSITION):
     ################### -- junction coordinates
     #
     # result_coords = []
-    # for car_results in vis_junkt_list:
+    # for car_results in vis_junct_list:
     #     result_coords.append([read_junc_coords(j) for j in car_results])
     # return result_coords
     #
@@ -93,24 +118,24 @@ def greedy_routing(CURR_POSITION):
 
 
 if __name__ == "__main__":
-
-    for i in range(0, general_info["junctions_num"], 100):
-        greedy_routing(i)
-
+    print(greedy_routing(START, 0))
     ################### -- to visualize streets viewed with different algorithms
     #
     # results = {"time": [], "len": []}
     # for START in range(0, general_info["junctions_num"], 1000):
-    #     rooting_len = greedy_routing()
-    #     print(rooting_len)
-    #     results["len"].append(rooting_len[0])
-    #     results["time"].append(rooting_len[1])
+    #     routing_len = greedy_routing(START)
+    #     print("LEN", routing_len)
+    #     results["len"].append(routing_len[0])
+    #     results["time"].append(routing_len[1])
+    #     print(results["time"], results["len"])
     #
     # import holoviews as hv
     # import hvplot
     # import hvplot.pandas
     # import pandas as pd
     # hv.extension('bokeh')
+    #
+    # print(results["time"], results["len"])
     #
     # df = pd.DataFrame({'Length':range(0, general_info["junctions_num"], 1000),
     #    ' ': results["len"],'  ':results["time"]})
