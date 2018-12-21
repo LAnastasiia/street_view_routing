@@ -3,7 +3,7 @@ from classes.car import Car
 from classes.street import read_from_database, reset_visited
 from classes.street import read_junc_coords
 from visualization.read_coords import get_info
-from choose_next_street import choose_next_len_time, choose_next_cost_time, euler_path, choose_back
+from choose_next_street import choose_next_len_time, choose_next_cost_time, euler_path, choose_back,choose_next_street_modificated
 
 input_file = "input_data.txt"
 general_info = get_info(input_file)
@@ -40,7 +40,7 @@ def write_results(total_time):
 
 
 # arr of functions for cars with different indexes
-choose_next = [choose_next_len_time, choose_next_cost_time, euler_path]
+choose_next = [choose_next_len_time, choose_next_cost_time, euler_path,choose_next_street_modificated]
 
 
 def greedy_routing(curr_pos, ind):

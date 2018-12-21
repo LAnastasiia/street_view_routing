@@ -8,7 +8,7 @@ class Street:
     def set_is_visited(self):
         import sqlite3
         self.is_visited = 1
-        con = sqlite3.connect("database/index.db")  # change to "../database/index.db" if running visual.py
+        con = sqlite3.connect("../database/index.db")  # change to "../database/index.db" if running visual.py
         cursor = con.cursor()
         cursor.execute("UPDATE streets SET is_visited = 1 WHERE begin=? AND end=?", self.junctions)
         cursor.execute("UPDATE streets SET is_visited = 1 WHERE begin=? AND end=?", (self.junctions[1], self.junctions[0]))
@@ -18,9 +18,10 @@ class Street:
     def __repr__(self):
         return str(self.junctions) + "--" + str(self.is_visited)
 
+
 def read_from_database(id):
     import sqlite3
-    con = sqlite3.connect("database/index.db")
+    con = sqlite3.connect("../database/index.db")
     cursor = con.cursor()
     lst = cursor.execute("SELECT * FROM streets WHERE begin='{}'".format(id)).fetchall()
     street_list = []
@@ -32,7 +33,7 @@ def read_from_database(id):
 
 def read_junc_coords(junct_index):
     import sqlite3
-    con = sqlite3.connect("database/index.db")
+    con = sqlite3.connect("../database/index.db")
     cursor = con.cursor()
     junct_coords = cursor.execute("SELECT * FROM junctions WHERE id='{}'".format(junct_index)).fetchall()[0]
     return junct_coords[1], junct_coords[2]
@@ -40,7 +41,7 @@ def read_junc_coords(junct_index):
 
 def reset_visited():
     import sqlite3
-    con = sqlite3.connect("database/index.db")  # change to "../database/index.db" if running visual.py
+    con = sqlite3.connect("../database/index.db")  # change to "../database/index.db" if running visual.py
     cursor = con.cursor()
     cursor.execute("UPDATE streets SET is_visited = 0 WHERE is_visited = 1")   #
     con.commit()
@@ -49,6 +50,14 @@ def reset_visited():
 
 def get_junction_degree(self):
         import sqlite3
-        con = sqlite3.connect("database/index.db")
+        con = sqlite3.connect("../database/index.db")
         cursor = con.cursor()
         return cursor.execute('SELECT degree FROM junctions WHERE id = ?', self.junctions[1])
+
+
+def has_way_out(junction_index):
+    street_list = read_from_database(junction_index)
+    for i in  street_list:
+        if i.is_visited == 0:
+            return True
+    return False
